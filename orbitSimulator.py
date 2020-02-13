@@ -27,7 +27,7 @@ class orbitSimulator(GraphWin):
         self.modeText.setTextColor(color_rgb(255,255,255))
         self.modeText.draw(self)
 
-        self.action = Text(Point(600, 70), 'D - Delete\nM - Move\nR - Restart\nF - Increase Mass in 10%\nG - Decrease Mass by 10%\nUp - Increase GameSpeed\nDown - Decrease GameSpeed')
+        self.action = Text(Point(600, 70), 'D - Delete\nM - Move\nR - Restart\nF - Increase Mass in 10%\nG - Decrease Mass by 10%\nUp - Increase GameSpeed\nDown - Decrease GameSpeed\nC - Clear Orbit Lines')
         self.action.setTextColor(color_rgb(255,255,255))
         self.action.draw(self)
 
@@ -113,7 +113,14 @@ class orbitSimulator(GraphWin):
             if self.gameSpeed > 1:
                 self.gameSpeed -= 10**(len(str(self.gameSpeed - 1)) - 1)
             self.speedText.setText('Game Speed: ' + str(self.gameSpeed / 1000) + 'x')
-            
+        if key == 'c':
+            self.clearOrbitLines()
+
+    
+    def clearOrbitLines(self):
+        for body in self.body:
+            for orbitLine in body.orbitLine:
+                orbitLine.undraw()
 
     def restart(self):
         self.destroy()
@@ -185,8 +192,4 @@ class rocket(Rectangle):
     def __init__(self, pX, pY):
         Rectangle.__init__(self, Point(pX, pY), Point(pX + 1,pY + 1))
         self.setFill(color_rgb(255,255,255))
-
-    
-
-        
 
